@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const {createClient} = require('@supabase/supabase-js');
+const { json } = require('express');
+
 
 app.use(express.json());
 app.use(cors({
@@ -33,6 +35,20 @@ app.get("/home",async(req,res) => {
   }
 })
 
-const PORT = process.env.PORT || 3001;
+app.get('/complaints', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('Complaints').select('*');
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving complaints:', error);
+    res.status(500).send('Error retrieving complaints');
+  }
+});
+
+ const PORT = process.env.PORT || 3001;
 
 app.listen(PORT,() => console.log(`Server is running on ${PORT}`));
