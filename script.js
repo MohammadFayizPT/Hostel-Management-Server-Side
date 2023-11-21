@@ -49,6 +49,19 @@ app.get('/complaints', async (req, res) => {
   }
 });
 
+app.get('/staffs', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('Staffs').select('*');
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving staffs:', error);
+    res.status(500).send('Error retrieving staffs');
+  }
+});
  const PORT = process.env.PORT || 3001;
 
 app.listen(PORT,() => console.log(`Server is running on ${PORT}`));
