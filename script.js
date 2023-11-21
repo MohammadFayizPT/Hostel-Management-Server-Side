@@ -49,6 +49,33 @@ app.get('/complaints', async (req, res) => {
   }
 });
 
+app.get('/feepayments', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('Fee Payment').select('*');
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving complaints:', error);
+    res.status(500).send('Error retrieving complaints');
+  }});
+  
+app.get('/students', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('Students').select('Student_id,Name,Room_id,Place,Phone_no');
+    if (error) {
+      throw new Error(error.message);
+    }
+    res.json(data)
+    
+  } catch (error) {
+    console.error('Error retrieving student details:', error);
+    res.status(500).send('Something Went Wrong');
+  }
+});
+
 app.get('/staffs', async (req, res) => {
   try {
     const { data, error } = await supabase.from('Staffs').select('*');
@@ -58,10 +85,10 @@ app.get('/staffs', async (req, res) => {
 
     res.json(data);
   } catch (error) {
-    console.error('Error retrieving staffs:', error);
-    res.status(500).send('Error retrieving staffs');
-  }
-});
+    console.error('Error retrieving complaints:', error);
+    res.status(500).send('Error retrieving complaints');
+  }});
+
  const PORT = process.env.PORT || 3001;
 
 app.listen(PORT,() => console.log(`Server is running on ${PORT}`));
