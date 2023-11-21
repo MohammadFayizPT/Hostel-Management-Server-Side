@@ -89,6 +89,22 @@ app.get('/staffs', async (req, res) => {
     res.status(500).send('Error retrieving complaints');
   }});
 
+  app.get('/rooms', async (req, res) => {
+    try {
+      const { data, error } = await supabase.from('Rooms').select('*');
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log(data);
+      res.json(data);
+      
+    } catch (error) {
+      console.error('Error retrieving student details:', error);
+      res.status(500).send('Something Went Wrong');
+    }
+  });
+
  const PORT = process.env.PORT || 3001;
 
 app.listen(PORT,() => console.log(`Server is running on ${PORT}`));
