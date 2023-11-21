@@ -49,6 +49,20 @@ app.get('/complaints', async (req, res) => {
   }
 });
 
+app.get('/students', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('Students').select('Student_id,Name,Room_id,Place,Phone_no');
+    if (error) {
+      throw new Error(error.message);
+    }
+    res.json(data)
+    
+  } catch (error) {
+    console.error('Error retrieving student details:', error);
+    res.status(500).send('Something Went Wrong');
+  }
+});
+
  const PORT = process.env.PORT || 3001;
 
 app.listen(PORT,() => console.log(`Server is running on ${PORT}`));
