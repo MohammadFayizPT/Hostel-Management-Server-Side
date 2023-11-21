@@ -62,7 +62,7 @@ app.get('/feepayments', async (req, res) => {
     res.status(500).send('Error retrieving complaints');
   }
 });
-
+  
 app.get('/students', async (req, res) => {
   try {
     const { data, error } = await supabase.from('Students').select('Student_id,Name,Room_id,Place,Phone_no');
@@ -76,6 +76,19 @@ app.get('/students', async (req, res) => {
     res.status(500).send('Something Went Wrong');
   }
 });
+
+app.get('/staffs', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('Staffs').select('*');
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving complaints:', error);
+    res.status(500).send('Error retrieving complaints');
+  }});
 
  const PORT = process.env.PORT || 3001;
 
