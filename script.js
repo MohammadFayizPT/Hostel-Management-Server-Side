@@ -49,7 +49,6 @@ app.get('/complaints', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 app.get('/feepayments', async (req, res) => {
   try {
     const { data, error } = await supabase.from('Fee Payment').select('*');
@@ -61,7 +60,9 @@ app.get('/feepayments', async (req, res) => {
   } catch (error) {
     console.error('Error retrieving complaints:', error);
     res.status(500).send('Error retrieving complaints');
-=======
+  }
+});
+
 app.get('/students', async (req, res) => {
   try {
     const { data, error } = await supabase.from('Students').select('Student_id,Name,Room_id,Place,Phone_no');
@@ -73,7 +74,6 @@ app.get('/students', async (req, res) => {
   } catch (error) {
     console.error('Error retrieving student details:', error);
     res.status(500).send('Something Went Wrong');
->>>>>>> 99e6b668553b38cea4f572fe51b59c44b7befc26
   }
 });
 
