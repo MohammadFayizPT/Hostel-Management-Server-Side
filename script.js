@@ -60,7 +60,8 @@ app.get('/feepayments', async (req, res) => {
   } catch (error) {
     console.error('Error retrieving complaints:', error);
     res.status(500).send('Error retrieving complaints');
-  }});
+  }
+});
   
 app.get('/students', async (req, res) => {
   try {
@@ -89,6 +90,7 @@ app.get('/staffs', async (req, res) => {
     res.status(500).send('Error retrieving complaints');
   }});
 
+
   app.get('/rooms', async (req, res) => {
     try {
       const { data, error } = await supabase.from('Rooms').select('*');
@@ -102,6 +104,33 @@ app.get('/staffs', async (req, res) => {
     } catch (error) {
       console.error('Error retrieving student details:', error);
       res.status(500).send('Something Went Wrong');
+    }});
+  app.post('/',async (req,res) => {
+     const formData = req.body;
+     console.log(formData);
+    try {
+      const { data, error } = await supabase.from('Students').insert([
+        {
+          Student_id: formData.admissionNo,
+          Name: formData.name,
+          Department: formData.department,
+          Sem: formData.semester,
+          Room_id: formData.roomNo,
+          Phone_no: formData.phoneNo,
+          Place: formData.place,
+        }
+      ]);
+      if (error) {
+        console.error('Error inserting data:', error);
+        res.status(500).json({ message: 'Error inserting data' });
+      } else {
+        console.log('Data inserted successfully:', data);
+        res.status(200).json({ message: 'Data inserted successfully' });
+      }
+    } catch (error) {
+       console.error('Error occurred while inserting data:', error);
+       res.status(500).json({ message: 'Error occurred while inserting data' });
+
     }
   });
 
