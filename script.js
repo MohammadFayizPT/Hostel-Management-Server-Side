@@ -90,6 +90,21 @@ app.get('/staffs', async (req, res) => {
     res.status(500).send('Error retrieving complaints');
   }});
 
+
+  app.get('/rooms', async (req, res) => {
+    try {
+      const { data, error } = await supabase.from('Rooms').select('*');
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log(data);
+      res.json(data);
+      
+    } catch (error) {
+      console.error('Error retrieving student details:', error);
+      res.status(500).send('Something Went Wrong');
+    }});
   app.post('/',async (req,res) => {
      const formData = req.body;
      console.log(formData);
@@ -115,6 +130,7 @@ app.get('/staffs', async (req, res) => {
     } catch (error) {
        console.error('Error occurred while inserting data:', error);
        res.status(500).json({ message: 'Error occurred while inserting data' });
+
     }
   });
 
