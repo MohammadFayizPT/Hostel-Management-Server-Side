@@ -105,6 +105,7 @@ app.get('/staffs', async (req, res) => {
       console.error('Error retrieving student details:', error);
       res.status(500).send('Something Went Wrong');
     }});
+    
   app.post('/',async (req,res) => {
      const formData = req.body;
      console.log(formData);
@@ -133,6 +134,39 @@ app.get('/staffs', async (req, res) => {
 
     }
   });
+
+  app.post('/staff', async (req, res) => {
+    try {
+      const staffData = req.body;
+      console.log('Received Staff Data:', staffData);
+  
+      const { data, error } = await supabase
+        .from('Staffs')
+        .insert([
+          {
+            Staff_id: staffData.staff_id,
+            Name: staffData.name,
+            Type: staffData.type,
+            Salary: staffData.salary,
+          }
+        ]);
+  
+      if (error) {
+        console.error('Error inserting staff data:', error);
+        return res.status(500).json({ message: 'Error inserting staff data' });
+      }
+  
+      console.log('Staff data inserted successfully:', data);
+      return res.status(200).json({ message: 'Staff data inserted successfully' });
+  
+    } catch (error) {
+  console.error('Error occurred while inserting staff data:', error);
+  res.status(500).json({ message: 'Error occurred while inserting staff data', error });
+}
+
+  });
+  
+  
 
  const PORT = process.env.PORT || 3001;
 
